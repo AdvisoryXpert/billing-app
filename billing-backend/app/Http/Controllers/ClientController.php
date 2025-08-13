@@ -18,6 +18,8 @@ class ClientController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'company' => 'nullable|string|max:255',
+            'site' => 'nullable|string|max:255',
+            'gstin' => 'nullable|string|max:255',
         ]);
 
         return Client::create($validated);
@@ -37,6 +39,8 @@ class ClientController extends Controller
         'phone' => 'nullable|string|max:20',
         'address' => 'nullable|string|max:255',
         'company' => 'nullable|string|max:255',
+        'site' => 'nullable|string|max:255',
+        'gstin' => 'nullable|string|max:255',
     ]);
 
     $client->update($validated);

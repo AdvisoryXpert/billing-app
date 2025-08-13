@@ -18,6 +18,8 @@ return new class extends Migration
         $table->string('phone')->nullable();
         $table->string('company')->nullable();
         $table->string('address')->nullable();
+        $table->string('state')->nullable();
+        $table->string('gstin')->nullable();
         $table->timestamps();
         });
     }
