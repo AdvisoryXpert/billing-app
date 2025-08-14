@@ -41,6 +41,11 @@ export async function listPayments(): Promise<Payment[]> {
   return data as Payment[];
 }
 
+export async function getPayment(id: number): Promise<Payment> {
+  const { data } = await api.get(`/invoices/${id}`);
+  return data as Payment;
+}
+
 export async function createPayment(payload: PaymentCreate): Promise<Payment> {
   const { data } = await api.post('/payments', payload);
   return data as Payment;

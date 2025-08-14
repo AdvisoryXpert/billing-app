@@ -351,6 +351,6 @@ function makeStyles(theme: any) {
     menuItemText: { fontSize: 14, fontWeight: '600' },
     menuDivider: { height: StyleSheet.hairlineWidth, marginVertical: 6 },
     content: { flex: 1, padding: 16 },
-    container: { alignSelf: 'center', maxWidth: 1200, width: 1200 },
+    container: { alignSelf: 'center', maxWidth: 1200, width: '100%' },
   });
 }
