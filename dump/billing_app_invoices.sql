@@ -1,0 +1,64 @@
+-- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
+--
+-- Host: localhost    Database: billing_app
+-- ------------------------------------------------------
+-- Server version	8.0.41
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `invoices`
+--
+
+DROP TABLE IF EXISTS `invoices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `invoices` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` bigint unsigned NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `invoice_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_date` date NOT NULL,
+  `due_date` date NOT NULL,
+  `total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `invoices_invoice_number_unique` (`invoice_number`),
+  KEY `invoices_client_id_foreign` (`client_id`),
+  KEY `invoices_user_id_foreign` (`user_id`),
+  CONSTRAINT `invoices_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `invoices_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoices`
+--
+
+LOCK TABLES `invoices` WRITE;
+/*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
+INSERT INTO `invoices` VALUES (2,1,1,'INV-TDTWB1EM','2025-07-22','2025-07-31',6000.00,'sent','2025-07-22 03:49:47','2025-07-22 03:57:23'),(3,2,1,'INV-QQ5E4PTY','2025-07-22','2025-07-31',5100.00,'draft','2025-07-22 03:50:26','2025-07-22 03:50:26'),(4,2,1,'INV-8PTWVKHI','2025-07-23','2025-07-31',513200.00,'paid','2025-08-06 08:43:34','2025-08-09 10:01:24'),(5,2,1,'INV-IJ32EIUB','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:36','2025-08-06 08:43:36'),(6,2,1,'INV-H4JDJKTD','2025-07-23','2025-07-31',13112.00,'sent','2025-08-06 08:43:38','2025-08-09 10:18:24'),(7,2,1,'INV-XEPNTMK2','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:39','2025-08-06 08:43:39'),(8,2,1,'INV-SEXRURTK','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:41','2025-08-06 08:43:41'),(9,2,1,'INV-ED0GWXRW','2025-07-23','2025-07-31',518.00,'draft','2025-08-06 08:43:42','2025-08-13 09:18:49'),(10,3,1,'INV-SP7EYWGY','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:50','2025-08-06 08:43:50'),(11,3,1,'INV-44DV6IRM','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:51','2025-08-06 08:43:51'),(12,3,1,'INV-VNAD5GPK','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:53','2025-08-06 08:43:53'),(13,3,1,'INV-JNSJCMU8','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:54','2025-08-06 08:43:54'),(14,3,1,'INV-5ETPDX5N','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:55','2025-08-06 08:43:55'),(15,3,1,'INV-MOPOPC6J','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:57','2025-08-06 08:43:57'),(16,3,1,'INV-73KRGRM1','2025-07-23','2025-07-31',513200.00,'draft','2025-08-06 08:43:58','2025-08-06 08:43:58'),(17,5,1,'INV-LPKNGTBU','2025-07-23','2025-07-31',509000.00,'draft','2025-08-09 09:38:09','2025-08-09 09:38:09');
+/*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-08-14 12:40:42
