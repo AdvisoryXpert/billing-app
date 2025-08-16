@@ -30,49 +30,34 @@ class AuthController extends Controller
 
     // LOGIN
     public function login(Request $request)
-{
-    Log::info('Login attempt started', ['email' => $request->email]);
+    {
+        Log::info('Login attempt started', ['email' => $request->email]);
 
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (!$user) {
-        Log::warning('Login failed - user not found', ['email' => $request->email]);
-        return response()->json(['message' => 'Invalid credentials (user)'], 401);
-    }
-
-    // ✅ Clean up old tokens (optional but safer)
-    $user->tokens()->delete();
-
-    $token = $user->createToken('auth_token')->plainTextToken;
-
-    Log::info('Login successful', ['user_id' => $user->id]);
-
-    return response()->json([
-        'access_token' => $token,
-        'token_type' => 'Bearer',
-        'user' => $user
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
-    if (!Hash::check($request->password, $user->password)) {
-        Log::warning('Login failed - wrong password', ['email' => $request->email]);
-        return response()->json(['message' => 'Invalid credentials (password)'], 401);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            Log::warning('Login failed - invalid credentials', ['email' => $request->email]);
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        // ✅ Clean up old tokens (optional but safer)
+        $user->tokens()->delete();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        Log::info('Login successful', ['user_id' => $user->id]);
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user
+        ]);
     }
-
-    $token = $user->createToken('auth_token')->plainTextToken;
-
-    Log::info('Login successful', ['user_id' => $user->id]);
-
-    return response()->json([
-        'access_token' => $token,
-        'token_type' => 'Bearer',
-        'user' => $user
-    ]);
-}
 
     // LOGOUT
     public function logout(Request $request)

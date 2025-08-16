@@ -12,8 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api/v1.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    ->withMiddleware(function (Middleware $middleware) {
+        // alias
+        $middleware->alias([
+            'tenant' => \App\Http\Middleware\ResolveTenant::class,
+        ]);
+
+        // apply to all API routes automatically (recommended)
+        $middleware->appendToGroup('api', [
+            \App\Http\Middleware\ResolveTenant::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
